@@ -104,7 +104,7 @@ export default function TestimonialCarousel({ testimonials }: TestimonialCarouse
             </div>
 
             <p className="text-gray-600 dark:text-gray-300 flex-grow">
-              "{testimonial.content}"
+              &ldquo;{testimonial.content}&rdquo;
             </p>
           </div>
         </div>

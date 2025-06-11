@@ -17,7 +17,7 @@ type FormData = z.infer<typeof formSchema>;
 
 export default function ContactForm() {
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [submitStatus, setSubmitStatus] = useState<'success' | 'error' | null>(null);
+  const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
 
   const {
     register,
@@ -30,7 +30,7 @@ export default function ContactForm() {
 
   const onSubmit = async (data: FormData) => {
     setIsSubmitting(true);
-    setSubmitStatus(null);
+    setSubmitStatus('idle');
 
     try {
       const response = await fetch('/api/contact', {
@@ -47,7 +47,7 @@ export default function ContactForm() {
 
       setSubmitStatus('success');
       reset();
-    } catch (error) {
+    } catch {
       setSubmitStatus('error');
     } finally {
       setIsSubmitting(false);
@@ -151,7 +151,7 @@ export default function ContactForm() {
           animate={{ opacity: 1 }}
           className="text-green-600 dark:text-green-400 text-center"
         >
-          Message sent successfully! I'll get back to you soon.
+          Message sent successfully! I&apos;ll get back to you soon.
         </motion.p>
       )}
 
@@ -164,6 +164,10 @@ export default function ContactForm() {
           Failed to send message. Please try again later.
         </motion.p>
       )}
+
+      <div className="text-sm text-gray-500 dark:text-gray-400">
+        I&apos;ll get back to you as soon as possible.
+      </div>
     </motion.form>
   );
 } 

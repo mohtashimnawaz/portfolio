@@ -187,7 +187,7 @@ function AnimatedRing({
       ref={ringRef}
       position={position}
       scale={springScale}
-      rotation={rotation as any}
+      rotation={rotation as unknown as THREE.Euler}
       onPointerOver={() => setHovered(true)}
       onPointerOut={() => setHovered(false)}
     >
@@ -253,9 +253,9 @@ function FloatingOrb({
       >
         <animated.mesh
           ref={orbRef}
-          position={springPosition as any}
+          position={springPosition as unknown as THREE.Vector3}
           scale={scale}
-          rotation={rotation as any}
+          rotation={rotation as unknown as THREE.Euler}
           onPointerOver={() => setHovered(true)}
           onPointerOut={() => setHovered(false)}
         >
@@ -314,9 +314,9 @@ function AnimatedTorus({
   return (
     <animated.mesh
       ref={torusRef}
-      position={springPosition as any}
+      position={springPosition as unknown as THREE.Vector3}
       scale={springScale}
-      rotation={rotation as any}
+      rotation={rotation as unknown as THREE.Euler}
       onPointerOver={() => setHovered(true)}
       onPointerOut={() => setHovered(false)}
     >
@@ -389,9 +389,9 @@ function FloatingText({
     <Float speed={1.5} rotationIntensity={0.2} floatIntensity={0.5}>
       <animated.group
         ref={textRef}
-        position={springPosition as any}
+        position={springPosition as unknown as THREE.Vector3}
         scale={springScale}
-        rotation={rotation as any}
+        rotation={rotation as unknown as THREE.Euler}
         onPointerOver={() => setHovered(true)}
         onPointerOut={() => setHovered(false)}
       >
@@ -480,37 +480,6 @@ function GradientBackground() {
         )}
       </meshBasicMaterial>
     </mesh>
-  );
-}
-
-// Interactive sphere with distortion
-function InteractiveSphere({ position, color = '#ff6b6b' }: { position: [number, number, number]; color?: string }) {
-  const sphereRef = useRef<THREE.Mesh>(null);
-  const [hovered, setHovered] = useState(false);
-
-  useFrame((state) => {
-    if (!sphereRef.current) return;
-    const time = state.clock.getElapsedTime();
-    sphereRef.current.rotation.x = Math.sin(time * 0.3) * 0.2;
-    sphereRef.current.rotation.y = Math.cos(time * 0.3) * 0.2;
-  });
-
-  return (
-    <Sphere
-      ref={sphereRef}
-      args={[0.5, 32, 32]}
-      position={position}
-      onPointerOver={() => setHovered(true)}
-      onPointerOut={() => setHovered(false)}
-    >
-      <MeshDistortMaterial
-        color={color}
-        metalness={0.5}
-        roughness={0.2}
-        distort={hovered ? 0.4 : 0.2}
-        speed={hovered ? 4 : 2}
-      />
-    </Sphere>
   );
 }
 
