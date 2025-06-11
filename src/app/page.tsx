@@ -6,7 +6,6 @@ import Scene3D from '@/components/Scene3D';
 import ThemeToggle from '@/components/layout/ThemeToggle';
 import ProjectCard from '@/components/projects/ProjectCard';
 import Timeline from '@/components/experience/Timeline';
-import ContactForm from '@/components/contact/ContactForm';
 import TestimonialCarousel from '@/components/testimonials/TestimonialCarousel';
 import BlogSection from '@/components/blog/BlogSection';
 import SkillsVisualization from '@/components/skills/SkillsVisualization';
@@ -469,7 +468,9 @@ export default function Home() {
               <ResumeDownload variant="primary" />
             </div>
 
-            <ContactForm />
+            <div className="text-center text-gray-500 dark:text-gray-400 py-12">
+              The contact form is currently disabled.
+            </div>
           </div>
         </motion.section>
       </div>

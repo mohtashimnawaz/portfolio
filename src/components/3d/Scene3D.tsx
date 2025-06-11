@@ -13,9 +13,6 @@ import {
   Trail,
   useTexture,
   MeshDistortMaterial,
-  Sphere,
-  Ring,
-  Torus,
   useCursor
 } from '@react-three/drei';
 import { useSpring, animated } from '@react-spring/three';
@@ -187,7 +184,7 @@ function AnimatedRing({
       ref={ringRef}
       position={position}
       scale={springScale}
-      rotation={rotation as any}
+      rotation={rotation as unknown as [number, number, number]}
       onPointerOver={() => setHovered(true)}
       onPointerOut={() => setHovered(false)}
     >
@@ -248,26 +245,25 @@ function FloatingOrb({
         width={hovered ? 4 : 2}
         length={hovered ? 12 : 8}
         color={new THREE.Color(trailColor)}
-        attenuation={(t) => t * t}
-        decay={hovered ? 0.5 : 0.8}
+        attenuation={(t: number) => t * t}
       >
         <animated.mesh
           ref={orbRef}
-          position={springPosition as any}
+          position={springPosition as unknown as [number, number, number]}
           scale={scale}
-          rotation={rotation as any}
+          rotation={rotation as unknown as [number, number, number]}
           onPointerOver={() => setHovered(true)}
           onPointerOut={() => setHovered(false)}
         >
           <sphereGeometry args={[0.5, 32, 32]} />
           <MeshDistortMaterial
             color={color}
-            metalness={hovered ? 0.8 : 0.5}
-            roughness={hovered ? 0.2 : 0.5}
+            metalness={hovered ? 0.8 : 0.2}
+            roughness={hovered ? 0.2 : 0.8}
             emissive={color}
-            emissiveIntensity={hovered ? 0.8 : 0.2}
-            distort={hovered ? 0.6 : 0.2}
-            speed={hovered ? 6 : 2}
+            emissiveIntensity={hovered ? 0.5 : 0.2}
+            distort={hovered ? 0.4 : 0.2}
+            speed={hovered ? 4 : 2}
           />
         </animated.mesh>
       </Trail>
@@ -290,17 +286,12 @@ function AnimatedTorus({
   useCursor(hovered);
 
   const { scale: springScale } = useSpring({
-    scale: hovered ? scale * 1.5 : scale,
-    config: springConfig
-  });
-
-  const { position: springPosition } = useSpring({
-    position: hovered ? [position[0], position[1] + 0.3, position[2]] as [number, number, number] : position,
+    scale: hovered ? scale * 1.3 : scale,
     config: springConfig
   });
 
   const { rotation } = useSpring({
-    rotation: hovered ? [Math.PI * 0.5, Math.PI * 0.5, Math.PI * 0.25] as [number, number, number] : [0, 0, 0] as [number, number, number],
+    rotation: hovered ? [Math.PI * 0.5, Math.PI * 0.5, 0] as [number, number, number] : [0, 0, 0] as [number, number, number],
     config: springConfig
   });
 
@@ -314,21 +305,22 @@ function AnimatedTorus({
   return (
     <animated.mesh
       ref={torusRef}
-      position={springPosition as any}
+      position={position}
       scale={springScale}
-      rotation={rotation as any}
+      rotation={rotation as unknown as [number, number, number]}
       onPointerOver={() => setHovered(true)}
       onPointerOut={() => setHovered(false)}
     >
-      <torusGeometry args={[1, 0.3, 16, 32]} />
+      <torusGeometry args={[1, 0.4, 16, 32]} />
       <MeshDistortMaterial
         color={color}
-        metalness={hovered ? 0.8 : 0.5}
-        roughness={hovered ? 0.2 : 0.5}
-        emissive={color}
-        emissiveIntensity={hovered ? 0.8 : 0.2}
-        distort={hovered ? 0.6 : 0.2}
-        speed={hovered ? 6 : 2}
+        transparent
+        opacity={hovered ? 0.8 : 0.4}
+        side={THREE.DoubleSide}
+        distort={hovered ? 0.4 : 0.1}
+        speed={hovered ? 4 : 1}
+        metalness={hovered ? 0.8 : 0.2}
+        roughness={hovered ? 0.2 : 0.8}
       />
     </animated.mesh>
   );
@@ -361,12 +353,12 @@ function FloatingText({
   });
 
   const { position: springPosition } = useSpring({
-    position: hovered ? [position[0], position[1] + 0.2, position[2]] as [number, number, number] : position,
+    position: hovered ? [position[0], position[1] + 0.5, position[2]] as [number, number, number] : position,
     config: springConfig
   });
 
   const { rotation } = useSpring({
-    rotation: hovered ? [0, Math.PI * 0.1, 0] as [number, number, number] : [0, 0, 0] as [number, number, number],
+    rotation: hovered ? [Math.PI * 0.5, Math.PI * 0.5, 0] as [number, number, number] : [0, 0, 0] as [number, number, number],
     config: springConfig
   });
 
@@ -389,9 +381,9 @@ function FloatingText({
     <Float speed={1.5} rotationIntensity={0.2} floatIntensity={0.5}>
       <animated.group
         ref={textRef}
-        position={springPosition as any}
+        position={springPosition as unknown as [number, number, number]}
+        rotation={rotation as unknown as [number, number, number]}
         scale={springScale}
-        rotation={rotation as any}
         onPointerOver={() => setHovered(true)}
         onPointerOut={() => setHovered(false)}
       >
@@ -480,37 +472,6 @@ function GradientBackground() {
         )}
       </meshBasicMaterial>
     </mesh>
-  );
-}
-
-// Interactive sphere with distortion
-function InteractiveSphere({ position, color = '#ff6b6b' }: { position: [number, number, number]; color?: string }) {
-  const sphereRef = useRef<THREE.Mesh>(null);
-  const [hovered, setHovered] = useState(false);
-
-  useFrame((state) => {
-    if (!sphereRef.current) return;
-    const time = state.clock.getElapsedTime();
-    sphereRef.current.rotation.x = Math.sin(time * 0.3) * 0.2;
-    sphereRef.current.rotation.y = Math.cos(time * 0.3) * 0.2;
-  });
-
-  return (
-    <Sphere
-      ref={sphereRef}
-      args={[0.5, 32, 32]}
-      position={position}
-      onPointerOver={() => setHovered(true)}
-      onPointerOut={() => setHovered(false)}
-    >
-      <MeshDistortMaterial
-        color={color}
-        metalness={0.5}
-        roughness={0.2}
-        distort={hovered ? 0.4 : 0.2}
-        speed={hovered ? 4 : 2}
-      />
-    </Sphere>
   );
 }
 
