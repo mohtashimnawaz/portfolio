@@ -21,6 +21,7 @@ import {
 import { useSpring, animated } from '@react-spring/three';
 import { EffectComposer, Bloom, Noise, ChromaticAberration, Vignette, DepthOfField } from '@react-three/postprocessing';
 import { BlendFunction, KernelSize } from 'postprocessing';
+import { Vector2 } from 'three';
 
 interface Scene3DProps {
   className?: string;
@@ -580,7 +581,9 @@ export default function Scene() {
           />
           <Noise opacity={0.02} />
           <ChromaticAberration
-            offset={[0.002, 0.002]}
+            offset={new Vector2(0.002, 0.002)}
+            radialModulation={false}
+            modulationOffset={0.5}
             blendFunction={BlendFunction.NORMAL}
           />
           <Vignette
