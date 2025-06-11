@@ -57,7 +57,7 @@ export default function Home() {
               </div>
               <div className="md:w-2/3 md:pl-8 text-lg text-gray-700 dark:text-gray-300 leading-relaxed">
                 <p className="mb-4">
-                  I'm a passionate software engineer with expertise in blockchain technology, particularly Solana
+                  I&apos;m a passionate software engineer with expertise in blockchain technology, particularly Solana
                   development, and a strong foundation in Rust programming. My journey in software development has led
                   me to work on innovative projects that combine cutting-edge technologies with practical solutions.
                 </p>
@@ -350,7 +350,7 @@ export default function Home() {
           <div className="max-w-4xl mx-auto text-center">
             <h2 className="text-3xl font-bold mb-8">Get in Touch</h2>
             <p className="text-lg text-gray-700 dark:text-gray-300 mb-8">
-              I'm always open to new opportunities and collaborations. Feel free to reach out!
+              I&apos;m always open to new opportunities and collaborations. Feel free to reach out!
             </p>
             <div className="flex flex-wrap justify-center gap-6 text-2xl">
               <a 
