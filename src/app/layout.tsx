@@ -20,19 +20,19 @@ export default function RootLayout({
     <html lang="en" className="scroll-smooth" suppressHydrationWarning>
       <body className={`${inter.className} bg-white dark:bg-gray-900 text-gray-900 dark:text-white`}>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-          <nav className="fixed w-full bg-white/80 dark:bg-gray-900/80 backdrop-blur-sm z-50 border-b border-gray-200 dark:border-gray-800">
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-              <div className="flex justify-between h-16 items-center">
-                <div className="flex-shrink-0 font-bold text-xl">
-                  MN
-                </div>
-                <div className="hidden md:block">
-                  <div className="ml-10 flex items-center space-x-8">
-                    <a href="#about" className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">About</a>
-                    <a href="#skills" className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">Skills</a>
-                    <a href="#projects" className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">Projects</a>
-                    <a href="#experience" className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">Experience</a>
-                    <a href="#contact" className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">Contact</a>
+        <nav className="fixed w-full bg-white/80 dark:bg-gray-900/80 backdrop-blur-sm z-50 border-b border-gray-200 dark:border-gray-800">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="flex justify-between h-16 items-center">
+              <div className="flex-shrink-0 font-bold text-xl">
+                MN
+              </div>
+              <div className="hidden md:block">
+                <div className="ml-10 flex items-center space-x-8">
+                  <a href="#about" className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">About</a>
+                  <a href="#skills" className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">Skills</a>
+                  <a href="#projects" className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">Projects</a>
+                  <a href="#experience" className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">Experience</a>
+                  <a href="#contact" className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">Contact</a>
                     <div className="flex items-center space-x-4 ml-4">
                       <a
                         href="https://github.com/mohtashimnawaz"
@@ -59,13 +59,13 @@ export default function RootLayout({
                       <ResumeDownload variant="icon" />
                     </div>
                   </div>
-                </div>
               </div>
             </div>
-          </nav>
-          <main className="pt-16">
-            {children}
-          </main>
+          </div>
+        </nav>
+        <main className="pt-16">
+          {children}
+        </main>
         </ThemeProvider>
       </body>
     </html>

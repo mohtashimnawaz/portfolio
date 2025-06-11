@@ -21,7 +21,6 @@ import {
 import { useSpring, animated } from '@react-spring/three';
 import { EffectComposer, Bloom, Noise, ChromaticAberration, Vignette, DepthOfField } from '@react-three/postprocessing';
 import { BlendFunction, KernelSize } from 'postprocessing';
-import { Vector2 } from 'three';
 
 interface Scene3DProps {
   className?: string;
@@ -188,7 +187,7 @@ function AnimatedRing({
       ref={ringRef}
       position={position}
       scale={springScale}
-      rotation={rotation as unknown as THREE.Euler}
+      rotation={rotation as any}
       onPointerOver={() => setHovered(true)}
       onPointerOut={() => setHovered(false)}
     >
@@ -254,9 +253,9 @@ function FloatingOrb({
       >
         <animated.mesh
           ref={orbRef}
-          position={springPosition as unknown as THREE.Vector3}
+          position={springPosition as any}
           scale={scale}
-          rotation={rotation as unknown as THREE.Euler}
+          rotation={rotation as any}
           onPointerOver={() => setHovered(true)}
           onPointerOut={() => setHovered(false)}
         >
@@ -315,9 +314,9 @@ function AnimatedTorus({
   return (
     <animated.mesh
       ref={torusRef}
-      position={springPosition as unknown as THREE.Vector3}
+      position={springPosition as any}
       scale={springScale}
-      rotation={rotation as unknown as THREE.Euler}
+      rotation={rotation as any}
       onPointerOver={() => setHovered(true)}
       onPointerOut={() => setHovered(false)}
     >
@@ -390,9 +389,9 @@ function FloatingText({
     <Float speed={1.5} rotationIntensity={0.2} floatIntensity={0.5}>
       <animated.group
         ref={textRef}
-        position={springPosition as unknown as THREE.Vector3}
+        position={springPosition as any}
         scale={springScale}
-        rotation={rotation as unknown as THREE.Euler}
+        rotation={rotation as any}
         onPointerOver={() => setHovered(true)}
         onPointerOut={() => setHovered(false)}
       >
@@ -481,6 +480,37 @@ function GradientBackground() {
         )}
       </meshBasicMaterial>
     </mesh>
+  );
+}
+
+// Interactive sphere with distortion
+function InteractiveSphere({ position, color = '#ff6b6b' }: { position: [number, number, number]; color?: string }) {
+  const sphereRef = useRef<THREE.Mesh>(null);
+  const [hovered, setHovered] = useState(false);
+
+  useFrame((state) => {
+    if (!sphereRef.current) return;
+    const time = state.clock.getElapsedTime();
+    sphereRef.current.rotation.x = Math.sin(time * 0.3) * 0.2;
+    sphereRef.current.rotation.y = Math.cos(time * 0.3) * 0.2;
+  });
+
+  return (
+    <Sphere
+      ref={sphereRef}
+      args={[0.5, 32, 32]}
+      position={position}
+      onPointerOver={() => setHovered(true)}
+      onPointerOut={() => setHovered(false)}
+    >
+      <MeshDistortMaterial
+        color={color}
+        metalness={0.5}
+        roughness={0.2}
+        distort={hovered ? 0.4 : 0.2}
+        speed={hovered ? 4 : 2}
+      />
+    </Sphere>
   );
 }
 
@@ -581,9 +611,7 @@ export default function Scene() {
           />
           <Noise opacity={0.02} />
           <ChromaticAberration
-            offset={new Vector2(0.002, 0.002)}
-            radialModulation={false}
-            modulationOffset={0.5}
+            offset={[0.002, 0.002]}
             blendFunction={BlendFunction.NORMAL}
           />
           <Vignette
