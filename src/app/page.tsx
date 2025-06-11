@@ -1,7 +1,6 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { Suspense } from 'react';
 import Image from "next/image";
 import Scene3D from '@/components/Scene3D';
 
@@ -19,7 +18,7 @@ export default function Home() {
             className="max-w-4xl mx-auto text-center backdrop-blur-sm bg-white/10 dark:bg-gray-900/10 p-8 rounded-2xl"
           >
             <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold mb-6">
-              <span className="text-white">Hi, I'm</span> <span className="text-blue-600 dark:text-blue-400">Mohtashim Nawaz</span>
+              <span className="text-white">Hi, I&apos;m</span> <span className="text-blue-600 dark:text-blue-400">Mohtashim Nawaz</span>
             </h1>
             <p className="text-xl sm:text-2xl text-gray-600 dark:text-gray-300 mb-8">
               Software Engineer specializing in Rust, Solana, and Full Stack Development
@@ -63,7 +62,7 @@ export default function Home() {
                   me to work on innovative projects that combine cutting-edge technologies with practical solutions.
                 </p>
                 <p>
-                  When I'm not coding, I'm constantly learning about new technologies and contributing to open-source
+                  When I&apos;m not coding, I&apos;m constantly learning about new technologies and contributing to open-source
                   projects. I believe in writing clean, efficient code and creating solutions that make a real impact.
                 </p>
               </div>
